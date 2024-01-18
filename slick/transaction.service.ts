@@ -15,29 +15,15 @@ export class TransactionLedgerService {
 
   async averageTransactionAmount(userId: string) {
     try {
-      let avgTransactionOfUser = 0;
       const txnOfUser =
         await this.transactionDatabaseService.transactionsOfUser(userId);
-
-      if (txnOfUser.length === 0) {
-        return {
-          status: 200,
-          message: 'transaction of user',
-          data: {
-            averageTransactions: 0,
-          },
-        };
-      }
-
-      for (let t = 0; t < txnOfUser.length; t++) {
-        avgTransactionOfUser += txnOfUser[t].amount;
-      }
 
       return {
         status: 200,
         message: 'transaction of user',
         data: {
-          averageTransactions: avgTransactionOfUser / txnOfUser.length,
+          averageTransactions:
+            txnOfUser.length > 0 ? Number(txnOfUser[0].amount) : 0,
         },
       };
     } catch (error) {
@@ -47,8 +33,6 @@ export class TransactionLedgerService {
 
   async transactionsForSpecificDay(date: string, userId: string) {
     try {
-      console.log(new Date(date));
-
       const txn = await this.transactionDatabaseService.transactionOnThatDay(
         new Date(date),
         userId,
