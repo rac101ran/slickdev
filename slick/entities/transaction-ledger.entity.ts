@@ -19,6 +19,7 @@ export class TransactionLedger {
   userId: string;
 
   @Column({ name: 'amount' })
+  @Index()
   amount: number;
 
   @CreateDateColumn({ name: 'created_at' })
