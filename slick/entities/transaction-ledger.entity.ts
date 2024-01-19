@@ -7,11 +7,6 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 
-// TransactionID (unique identifier for each transaction)
-// UserID (unique identifier for each user)
-// Amount (transaction amount in dollars)
-// Timestamp (the time when the transaction occurred)
-
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEF12345678', 8);
 
 @Entity({ name: 'transaction_ledger' })
@@ -27,5 +22,6 @@ export class TransactionLedger {
   amount: number;
 
   @CreateDateColumn({ name: 'created_at' })
+  @Index()
   createdAt: Date;
 }
